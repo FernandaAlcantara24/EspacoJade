@@ -1,20 +1,35 @@
+import 'react-native-gesture-handler';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
+import { Parisienne_400Regular } from '@expo-google-fonts/parisienne';
+import { SplashScreen } from 'expo-splash-screen'; // Importe SplashScreen
+import Routes from './src/router';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Parisienne_400Regular,
+  });
+
+  useEffect(() => {
+    const init = async () => {
+      await SplashScreen.preventAutoHideAsync(); // Impede o SplashScreen de se ocultar automaticamente
+      // Faça qualquer inicialização ou carregamento de dados necessário aqui
+      await SplashScreen.hideAsync(); // Oculta manualmente o SplashScreen após a inicialização
+    };
+
+    init();
+  }, []);
+
+  if (!fontsLoaded) {
+    return null; // Renderize null enquanto as fontes não estiverem carregadas
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="light" backgroundColor="#000" translucent={true} />
+      <Routes />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
