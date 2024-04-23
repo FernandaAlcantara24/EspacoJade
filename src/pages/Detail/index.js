@@ -18,7 +18,7 @@ export default function Detail(props) { //props está passando informações de 
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator='false'>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
       {/* Cabeçalho */}
       <View>

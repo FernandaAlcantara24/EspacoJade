@@ -1,17 +1,46 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Platform, Dimensions, Pressable } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { Items } from '../../component/Clothes/Database';
 import Clothes from '../../component/Clothes';
+import { auth } from '../../firebase.config';
+import { useNavigation } from '@react-navigation/native';
+import { signOut } from 'firebase/auth';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function Home() {
+    const navigation = useNavigation();
+    const currentUser = auth.currentUser;
+    if(currentUser != null){
+       
+    } else {
+        alert('É necessario estar logado para utilizar este recurso!')
+        navigation.goBack()
+    }
+
+    function logout(){
+        signOut(auth)
+        .then(()=>{
+            alert('Você desconectou-se do sistema!');
+            navigation.navigate('Login');
+        })
+    }
 
     return (
-        <View style={styles.container}>
+        
+        <View style={styles.container}>    
+
             <View style={styles.header}>
-                <Text style={{ fontFamily: 'Parisienne_400Regular', color: '#eb248b', fontSize: 40, paddingLeft: 8 }}>
+
+                <View style={styles.button}>
+                <Pressable onPress={logout}>
+                    <Text style={styles.buttonText}>Sair</Text>
+                </Pressable>
+                </View>
+
+
+                <Text style={styles.logo}>
                     <Image
                         source={require('../../assets/logo.png')}
                         style={{ width: 55, height: 55 }}
@@ -37,7 +66,7 @@ export default function Home() {
             </View>
 
             <View style={styles.line} />
-            <ScrollView showsVerticalScrollIndicator='false'>
+            <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.productsContainer}>
                 {Items.map((products, index) =>
                     <Clothes products={products} key={index} />
@@ -95,4 +124,30 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 10,
     },
+    button: {
+        width: 50,
+        top:-30,
+        paddingVertical: 10,
+        borderRadius: 100,
+        backgroundColor: '#eb248b',
+        marginVertical: 10,
+        marginLeft:-70
+        
+      },
+      buttonText: {
+        color: '#fff',
+        fontFamily: 'Poppins_400Regular',
+        fontSize: 10,
+        textAlign: 'center',
+
+      },
+      logo:{
+        fontFamily: 'Parisienne_400Regular',
+         color: '#eb248b',
+         fontSize: 40,
+         paddingLeft: 5,
+         textAlign:'center',
+         marginLeft:-150
+
+      },
 });
