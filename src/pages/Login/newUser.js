@@ -75,6 +75,16 @@ export default function NewUser(){
             </Text>
 
           </Pressable>
+          <Pressable
+          style={{marginTop: 15}}
+          onPress={() => navigation.goBack()}>
+          
+          
+            <Text>
+                Voltar
+            </Text>
+
+          </Pressable>
         </View>
     );
 }

@@ -1,4 +1,7 @@
+
+
 export const Items =[
+    
     {
         id:1,
         category:'Vestido',
@@ -12,51 +15,61 @@ export const Items =[
     {
         id:2,
         category:'Vestido',
-        material:'',
         productName:'Vestido Jade Luxuoso',
         productPrice:'74,80',
         description: 'O vestido jade luxuoso é uma expressão de frescor e estilo. Com suas estampas verdes que lembram a exuberância da natureza, esta peça transmite uma sensação de vitalidade e elegância. Feito com tecido leve e fluído, oferece conforto e movimento.',
         image: require('../../assets/vestidoLongoJade.png'),
-        colors:  [ '#436850', '#A9B388','#9BCF53',]
+        colors:  [ '#436850', '#A9B388','#9BCF53',],
+        material:'Viscolinho',
     },
     {
         id:3,
         category:'Vestido',
-        material:'',
         productName:'Vestido Jardim Secreto',
         productPrice:'99,90',
         description: 'O vestido jardim secreto é uma peça deslumbrante que evoca a exuberância da natureza em sua tonalidade serena. Com seu tecido fluido que se move com graça, este vestido exala elegância e sofisticação.',
         image: require('../../assets/vestidoLongoJardimSecreto.png'),
-        colors:  [ '#436850', '#A9B388','#9BCF53',]
+        colors:  [ '#436850', '#A9B388','#9BCF53',],
+        material:'Viscolinho',
     },
     {
         id:4,
         category:'Macacão',
-        material:'',
         productName:'Macacão Asas Azul',
         productPrice:'90,00',
-        description: '',
+        description: 'Um macacão branco adornado com delicadas borboletas azuis, parecendo flutuar em uma brisa suave. Este macacão evoca uma sensação de leveza e beleza natural, perfeito para um dia ensolarado ou uma noite estrelada.',
         image: require('../../assets/macacaoAsasAzul.png'),
-        colors:  [ '#074173', '#7AA2E3','#D20062','#000000']
+        colors:  [ '#074173', '#7AA2E3','#D20062','#000000'],
+        material:'Viscolinho',
     },
     {
         id:5,
         category:'Macacão',
-        material:'',
         productName:'Macacão Branco Aquarela',
         productPrice:'90,00',
-        description: '',
+        description: 'O Macacão Branco Aquarela é uma peça elegante e leve, feita de um tecido branco delicado e fluido. Seu design apresenta um padrão de aquarela vibrante e suave, que adiciona um toque de frescor e vivacidade à peça. Versátil e sofisticado, pode ser usado em uma variedade de ocasiões, proporcionando um visual único e elegante.',
         image: require('../../assets/macacaoBrancoAquarela.png'),
-        colors:  [ '#074173', '#D04848','#9BCF53','#FDE767']
+        colors:  [ '#074173', '#D04848','#9BCF53','#FDE767'],
+        material:'Viscolinho',
     },
     {
         id:6,
         category:'Macacão',
-        material:'',
         productName:'Macacão Tropical',
         productPrice:'65,50',
-        description: '',
+        description: 'O "Macacão Tropical" é uma peça descontraída e colorida, perfeita para os dias de verão. Feito de um tecido leve e estampado com padrões tropicais vibrantes, traz uma sensação de frescor e diversão ao visual. Sua silhueta confortável e elegante o torna uma escolha versátil para diversas ocasiões, enquanto sua vibe tropical adiciona um toque exótico ao look. Ideal para combinar com sandálias e acessórios coloridos, é a escolha certa para aproveitar os dias ensolarados com estilo.',
         image: require('../../assets/macacaoTropical.png'),
-        colors:  [ '#E0F4FF','#FCDC2A']
+        colors:  [ '#E0F4FF','#FCDC2A'],
+        material:'Viscolinho',
+    },
+    {
+        id:7,
+        category:'Conjunto',
+        productName:'Conjunto Outono',
+        productPrice:'85,50',
+        description: 'O "Conjunto Outono" é uma escolha aconchegante e elegante para os dias mais frescos. Composto por peças coordenadas em tons terrosos e texturas quentes, como blusa e calça ou saia, proporciona conforto e estilo durante a estação. Versátil, pode ser usado em diversas ocasiões, do trabalho a eventos casuais. Combine com botas e acessórios para um look completo que celebra a beleza do outono.',
+        image: require('../../assets/conjuntoFolhas.png'),
+        colors:  [ '#E0F4FF','#FCDC2A'],
+        material:'Viscolinho',
     },
 ]

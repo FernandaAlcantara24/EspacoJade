@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts, Poppins_400Regular } from '@expo-google-fonts/poppins';
 import { Parisienne_400Regular } from '@expo-google-fonts/parisienne';
-import { SplashScreen } from 'expo-splash-screen'; // Importe SplashScreen
+import * as SplashScreen from 'expo-splash-screen'; // Importe SplashScreen
 import Routes from './src/router';
 
 export default function App() {

@@ -53,6 +53,7 @@ export default function ReplacePass(){
 
           </Pressable>
           <Pressable
+          style={{marginTop: 15}}
           onPress={() => navigation.goBack()}>
           
             <Text>

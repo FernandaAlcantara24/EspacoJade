@@ -1,27 +1,47 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, Platform, TouchableOpacity} from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import Dot from '../../component/Clothes/Dot';
 import SizeButton from '../../component/Clothes/SizeButton';
 import Button from '../../component/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
+import { Items } from '../../component/Clothes/Database';
+import { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
-
-export default function Detail(props) { //props está passando informações de um componente pai para um componente filho.
-  let products = props.route.params; //contém os parâmetros passados para esta tela de navegação. 
+export default function Detail(props) {
+  let products = props.route.params;
   const navigation = useNavigation();
   const [selectedSize, setSelectedSize] = useState(null);
+  const [corSelecionada, setCorSelecionada] = useState('');
+  const [tamanhoSelecionado, setTamanhoSelecionado] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const handleSizePress = (size) => {
-    setSelectedSize(size); // Atualizar o tamanho selecionado ao pressionar um botão
+  const colorNames = {
+    '#6C0345': 'Vinho',
+    '#DC6B19': 'Bronze',
+    '#FCDC2A': 'Amarelo',
+    '#C08261': 'Nude',
+    '#436850': 'Verde Musgo',
+    '#A9B388': 'Verde Claro',
+    '#9BCF53': 'Verde Limão',
+    '#074173': 'Azul Escuro',
+    '#7AA2E3': 'Azul ',
+    '#D20062': 'Rosa',
+    '#000000': 'Preto',
+    '#D04848': 'Vermelho',
+    '#E0F4FF': 'Azul Bebê'
   };
 
-  return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+  const handleSizePress = (size) => {
+    setSelectedSize(size);
+  };
 
-      {/* Cabeçalho */}
-      <View>
+  return ( 
+    
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View >
         <SafeAreaView style={{ flexDirection: 'row' }}>
           <TouchableOpacity
             style={{ backgroundColor: 'rgba(250,200,200,0.2)', borderRadius: 5, marginLeft: '2%' }}
@@ -31,8 +51,6 @@ export default function Detail(props) { //props está passando informações de 
           <Text style={{ fontSize: 20, marginLeft: '3%' }}>{products.productName}</Text>
         </SafeAreaView>
       </View>
-
-      {/* Imagem roupa */}
       <View style={styles.viewImage}> 
         <Image
           source={products.image}
@@ -40,8 +58,6 @@ export default function Detail(props) { //props está passando informações de 
           resizeMode='cover'
         />
       </View>
-
-      {/* View preço, nome, cor e tamanho do produto */}
       <View>
         <View>
           <Text style={[styles.title, { fontSize: 20 }, {marginTop: 15}, {color: '#eb248b'}]}>R${products.productPrice}</Text>
@@ -49,23 +65,22 @@ export default function Detail(props) { //props está passando informações de 
         <View opacity={0.4}>
           <Text style={[styles.title, { fontSize: 17 }]}>{products.productName}</Text>
         </View>
-
         <Text style={{fontSize: 17,  paddingHorizontal: '2%', marginTop: '3%' }}>Cores:</Text>
         <View style={styles.dotContainer}>
-          {/* Chama as cores do produto */}
-        {products.colors.map((color, index) => ( 
-          <Dot key={index} color={color} />
-        ))}
+          {products.colors.map((color, index) => ( 
+            <Dot key={index} color={color} onPress={()=> setCorSelecionada(colorNames[color])}/>
+          ))}
         </View>
-
-        {/* Botões de tamanhos do produto */}
         <Text style={{fontSize: 17,  paddingHorizontal: '2%'}}>Tamanhos:</Text>
         <View style={{ flexDirection: 'row', width: '100%' }} >
           <ScrollView horizontal showsHorizontalScrollIndicator={false} >
             <SizeButton
               bgColor="#eb248b"
               color='black'
-              onPress={() => handleSizePress(0)}
+              onPress={() => {
+                handleSizePress(0);
+                setTamanhoSelecionado(38);
+              }}
               isSelected={selectedSize === 0}
             >
               38
@@ -73,7 +88,10 @@ export default function Detail(props) { //props está passando informações de 
             <SizeButton
               bgColor="#eb248b"
               color='black'
-              onPress={() => handleSizePress(1)}
+              onPress={() => {
+                handleSizePress(1);
+                setTamanhoSelecionado(40);
+              }}
               isSelected={selectedSize === 1}
             >
               40
@@ -81,7 +99,10 @@ export default function Detail(props) { //props está passando informações de 
             <SizeButton
               bgColor="#eb248b"
               color='black'
-              onPress={() => handleSizePress(2)}
+              onPress={() => {
+                handleSizePress(2);
+                setTamanhoSelecionado(42);
+              }}
               isSelected={selectedSize === 2}
             >
               42
@@ -89,30 +110,48 @@ export default function Detail(props) { //props está passando informações de 
             <SizeButton
               bgColor="#eb248b"
               color='black'
-              onPress={() => handleSizePress(3)}
+              onPress={() => {
+                handleSizePress(3);
+                setTamanhoSelecionado(44);
+              }}
               isSelected={selectedSize === 3}
             >
               44
             </SizeButton>
           </ScrollView>
         </View>
-
-        {/* Descrição do produto */}
         <View style={styles.texTitle}>
           <Text style={[styles.textContent, {fontSize: 20}]}>{products.productName}</Text>
-
-          <Text style={styles.textContent}>{products.description}</Text>
-
-          <Text style={styles.textList}>- Categoria: {products.category}</Text>
-
-          <Text style={styles.textList}>- Material: {products.material}</Text>
         </View>
 
+        {/* Botão para abrir o modal */}
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Text style={{fontSize: 17,  paddingHorizontal: '4%', marginTop: '3%', color: 'gray'}}>Ver Descrição...</Text>
+        </TouchableOpacity>
+        
+
+        {/* Modal */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Text style={{fontSize: 18, color: '#eb248b', marginTop: 20,}}>Fechar</Text>
+              </TouchableOpacity>
+              <Text style={styles.modalText}>{products.description}</Text>
+              <Text style={styles.modalText}>Categoria: {products.category}</Text>
+              <Text style={styles.modalText}>Material: {products.material}</Text>
+            </View>
+          </View>
+        </Modal>
+
         {/* Botão para comprar */}
-        <Button/>
-
+        <Button products={products} tamanhoSelecionado={tamanhoSelecionado} corSelecionada={corSelecionada}/>
       </View>
-
     </ScrollView>
   );
 }
@@ -128,11 +167,8 @@ const styles = StyleSheet.create({
     height: 400,    
   },
   title: {
-
     fontFamily: 'Poppins_400Regular',
     paddingHorizontal: '2%',
-   
-
   },
   dotContainer: {
     flexDirection: 'row',
@@ -155,22 +191,32 @@ const styles = StyleSheet.create({
     lineHeight: 25,
   },
   viewImage:{
-    ...Platform.select({
-        ios: {
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.3,
-          shadowRadius: 2,
-        },
-        android: {
-          elevation: 3,
-        },
-      }),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 3,
   },
-  line:{
-    borderWidth: 1,
-    borderBottomColor: '#DDD',
-    marginVertical: '2%'
-  },
-
-});
+  
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'flex-end', // Alinha o conteúdo na parte inferior da tela
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semi-transparente
+    },
+    modalContent: {
+      backgroundColor: '#fff',
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      padding: 20,
+      minHeight: '50%', // Altura mínima definida como metade da tela
+    },
+    modalText:{
+      fontSize: 15,
+      lineHeight: 25,
+      marginVertical: '2%',
+      paddingHorizontal: '2%',
+      fontFamily: 'Poppins_400Regular',
+      marginTop: 20
+    }
+  });
+  

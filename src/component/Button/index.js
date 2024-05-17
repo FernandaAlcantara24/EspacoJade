@@ -1,25 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, ToastAndroid } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 
-export default function Button(props) {
+export default function Button({  products, tamanhoSelecionado, corSelecionada}) {
     
- return (
-   <View style={styles.container}>
+    
+    const enviarParaWhatsapp = () => {
+        const mensagem = `Olá!\nGostaria de comprar o produto "${products.productName}",\nno tamanho "${tamanhoSelecionado}",\ne na cor "${corSelecionada}".\nPor favor, me informe como posso proceder com a compra.\nObrigado!.`;
+        const numeroWhatsapp = 'numero';
+        Linking.openURL(`whatsapp://send?phone=${numeroWhatsapp}&text=${encodeURIComponent(mensagem)}`);
 
-    <TouchableOpacity style={styles.btnContainer} onPress={() => {Linking.openURL('https://api.whatsapp.com/send?phone=5521971490546&text=Oi%20')}}>
-    <Text style={styles.title}>COMPRAR</Text>
-    </TouchableOpacity>
-
-   </View>
-  );
+    };
+    
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.btnContainer} onPress={enviarParaWhatsapp}>
+                <Text style={styles.title}>COMPRAR</Text>
+            </TouchableOpacity>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         alignItems: 'center',
         justifyContent: 'center'
     },
-    btnContainer:{
+    btnContainer: {
         width: '90%',
         height: 50,
         backgroundColor: '#eb248b',
@@ -28,7 +34,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    title:{
+    title: {
         fontSize: 20,
         color: '#FFF'
     }
