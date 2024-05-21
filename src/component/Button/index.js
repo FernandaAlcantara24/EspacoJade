@@ -6,7 +6,7 @@ export default function Button({  products, tamanhoSelecionado, corSelecionada})
     
     const enviarParaWhatsapp = () => {
         const mensagem = `Olá!\nGostaria de comprar o produto "${products.productName}",\nno tamanho "${tamanhoSelecionado}",\ne na cor "${corSelecionada}".\nPor favor, me informe como posso proceder com a compra.\nObrigado!.`;
-        const numeroWhatsapp = 'numero';
+        const numeroWhatsapp = '';
         Linking.openURL(`whatsapp://send?phone=${numeroWhatsapp}&text=${encodeURIComponent(mensagem)}`);
 
     };

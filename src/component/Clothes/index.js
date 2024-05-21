@@ -8,6 +8,7 @@ export default function Clothes({ products }) { // Products fornece os dados do 
     const navigation = useNavigation();
     return (
         
+        
         <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate('Detail', { ...products })}>
             <Image
                 source={products.image}
@@ -19,6 +20,7 @@ export default function Clothes({ products }) { // Products fornece os dados do 
                 <Text>R${products.productPrice}</Text>
             </View>
         </TouchableOpacity>
+        
         
     );
 }
