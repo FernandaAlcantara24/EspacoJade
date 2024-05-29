@@ -106,7 +106,7 @@ export default function Home() {
                         <TouchableOpacity onPress={() => handleFilter('vestido')} style={styles.filterButton}>
                             <Text style={styles.filterButtonText}>Vestido</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => handleFilter('macacao')} style={styles.filterButton}>
+                        <TouchableOpacity onPress={() => handleFilter('macacão')} style={styles.filterButton}>
                             <Text style={styles.filterButtonText}>Macacão</Text>
                         </TouchableOpacity><TouchableOpacity onPress={() => handleFilter('conjunto')} style={styles.filterButton}>
                             <Text style={styles.filterButtonText}>Conjunto</Text>
