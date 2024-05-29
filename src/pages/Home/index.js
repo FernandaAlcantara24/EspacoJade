@@ -6,6 +6,8 @@ import Clothes from '../../component/Clothes';
 import { auth } from '../../firebase.config';
 import { useNavigation } from '@react-navigation/native';
 import { signOut } from 'firebase/auth';
+import Favorite from '../Favorite';
+
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -13,7 +15,6 @@ export default function Home() {
     const navigation = useNavigation();
     const currentUser = auth.currentUser;
     const [modalVisible, setModalVisible] = useState(false);
-    const [modalVisible2, setModalVisible2] = useState(false);
     const [filter, setFilter] = useState('all'); // Estado do filtro, inicializado como 'all'
 
     if (currentUser != null) {
@@ -57,9 +58,11 @@ export default function Home() {
                     />
                     Espaço Jade
                 </Text>
+
+                {/* Favoritos */}
                 <TouchableOpacity
                     style={{ position: 'absolute', right: 20, bottom: 30, alignSelf: 'center' }}
-                     //favoritos
+                    onPress={() => navigation.navigate('Favorite')}
                 >
                     <AntDesign name="hearto" size={24} color="black" />
                 </TouchableOpacity>
@@ -79,6 +82,7 @@ export default function Home() {
                 </TouchableOpacity>
             </View>
 
+            {/* Chamando os produtos */}
             <View style={styles.line} />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.productsContainer}>
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 50,
-        top: -25,
+        top: '-3%',
         paddingVertical: 10,
         borderRadius: 100,
         backgroundColor: '#eb248b',

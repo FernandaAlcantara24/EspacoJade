@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, Alert } from 'react-native';
 import Dot from '../../component/Clothes/Dot';
 import SizeButton from '../../component/Clothes/SizeButton';
 import Button from '../../component/Button';
@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
+import { FavoriteContext } from '../Favorite/favoritecontext';
 
 export default function Detail(props) {
   let products = props.route.params;
@@ -15,6 +16,7 @@ export default function Detail(props) {
   const [corSelecionada, setCorSelecionada] = useState('');
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const { addToFavorites } = useContext(FavoriteContext);
 
   const colorNames = {
     '#6C0345': 'Vinho',
@@ -36,6 +38,11 @@ export default function Detail(props) {
     setSelectedSize(size);
   };
 
+  const adicionarAosFavoritos = () => {
+    addToFavorites(products);
+    Alert.alert('Favoritos', 'Produto adicionado aos meus favoritos com sucesso!');
+  };
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View>
@@ -46,6 +53,9 @@ export default function Detail(props) {
             <AntDesign name="left" size={30} color="#eb248b" />
           </TouchableOpacity>
           <Text style={{ fontSize: 20, marginLeft: '3%' }}>{products.productName}</Text>
+          <TouchableOpacity style={styles.favButton} onPress={adicionarAosFavoritos}>
+            <AntDesign name="hearto" size={25} color="#eb248b" />
+          </TouchableOpacity>
         </SafeAreaView>
       </View>
       <View style={styles.viewImage}>
@@ -120,13 +130,9 @@ export default function Detail(props) {
         <View style={styles.texTitle}>
           <Text style={[styles.textContent, { fontSize: 20 }]}>{products.productName}</Text>
         </View>
-
-        {/* Botão para abrir o modal */}
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Text style={{ fontSize: 17, paddingHorizontal: '4%', marginTop: '3%', color: 'gray' }}>Ver Descrição...</Text>
         </TouchableOpacity>
-
-        {/* Modal */}
         <Modal
           animationType="none"
           transparent={true}
@@ -139,7 +145,7 @@ export default function Detail(props) {
               entering={ZoomIn}
               exiting={ZoomOut}
             >
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <TouchableOpacity style={styles.favButton} onPress={() => setModalVisible(false)}>
                 <Text style={{ fontSize: 18, color: '#eb248b', marginTop: 20 }}>Fechar</Text>
               </TouchableOpacity>
               <Text style={styles.modalText}>{products.description}</Text>
@@ -148,8 +154,6 @@ export default function Detail(props) {
             </Animated.View>
           </View>
         </Modal>
-
-        {/* Botão para comprar */}
         <Button products={products} tamanhoSelecionado={tamanhoSelecionado} corSelecionada={corSelecionada} />
       </View>
     </ScrollView>
@@ -199,15 +203,15 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'flex-end', // Alinha o conteúdo na parte inferior da tela
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semi-transparente
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     backgroundColor: '#fff',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
-    minHeight: '50%', // Altura mínima definida como metade da tela
+    minHeight: '50%',
   },
   modalText: {
     fontSize: 15,
@@ -216,5 +220,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: '2%',
     fontFamily: 'Poppins_400Regular',
     marginTop: 20
-  }
+  },
+  favButton: {
+    marginLeft: 'auto',
+    marginRight: '2%',
+  },
 });
