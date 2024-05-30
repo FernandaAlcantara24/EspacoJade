@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, FlatList, StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, SafeAreaView, TouchableOpacity, Image, Linking } from 'react-native';
 import { FavoriteContext } from './favoritecontext';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
@@ -7,6 +7,16 @@ import { AntDesign } from '@expo/vector-icons';
 const Favorite = () => {
   const { favoritos, removeFromFavorites } = useContext(FavoriteContext);
   const navigation = useNavigation();
+
+  const enviarParaWhatsapp = () => {
+    let mensagem = 'Olá!\nGostaria de comprar os seguintes produtos:\n';
+    favoritos.forEach(item => {
+      mensagem += `- ${item.productName}, Tamanho: ${item.tamanhoSelecionado}, Cor: ${item.corSelecionada}\n`;
+    });
+    mensagem += 'Por favor, me informe como posso proceder com a compra.\nObrigado!.';
+    const numeroWhatsapp = '5521971490546';
+    Linking.openURL(`whatsapp://send?phone=${numeroWhatsapp}&text=${encodeURIComponent(mensagem)}`);
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
@@ -18,12 +28,13 @@ const Favorite = () => {
         <View style={styles.textContainer}>
           <Text style={styles.productName}>{item.productName}</Text>
           <Text style={styles.productPrice}>R${item.productPrice}</Text>
+          <Text style={styles.productDetails}>Tamanho: {item.tamanhoSelecionado}</Text>
+          <Text style={styles.productDetails}>Cor: {item.corSelecionada}</Text>
         </View>
         <TouchableOpacity onPress={() => removeFromFavorites(item.id)}>
-        <AntDesign name="delete" size={25} color="red" />
+          <AntDesign name="delete" size={25} color="red" />
+        </TouchableOpacity>
       </TouchableOpacity>
-      </TouchableOpacity>
-      
     </View>
   );
 
@@ -36,16 +47,21 @@ const Favorite = () => {
         >
           <AntDesign name="left" size={30} color="#eb248b" />
         </TouchableOpacity>
-        <Text style={{ fontSize: 22, marginLeft: '3%', marginTop: '1%' }}>Meus Favoritos</Text>
+        <Text style={{ fontSize: 22, marginLeft: '3%', marginTop: '1%' }}>Carrinho</Text>
       </SafeAreaView>
       {favoritos.length === 0 ? (
-        <Text style={styles.emptyText}>Nenhum favorito adicionado.</Text>
+        <Text style={styles.emptyText}>Nenhum item adicionado.</Text>
       ) : (
-        <FlatList
-          data={favoritos}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderItem}
-        />
+        <>
+          <FlatList
+            data={favoritos}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderItem}
+          />
+          <TouchableOpacity style={styles.whatsappButton} onPress={enviarParaWhatsapp}>
+            <Text style={styles.whatsappButtonText}>Enviar para WhatsApp</Text>
+          </TouchableOpacity>
+        </>
       )}
     </View>
   );
@@ -84,9 +100,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'gray',
   },
+  productDetails: {
+    fontSize: 14,
+    color: 'gray',
+  },
   emptyText: {
     textAlign: 'center',
     marginTop: 20,
+    fontSize: 18,
+  },
+  whatsappButton: {
+    backgroundColor: '#25D366',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  whatsappButtonText: {
+    color: '#fff',
     fontSize: 18,
   },
 });

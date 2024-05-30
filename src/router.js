@@ -10,6 +10,7 @@ import NewUser from './pages/Login/newUser';
 import ReplacePass from './pages/Login/replacePass';
 import { FavoriteProvider } from './pages/Favorite/favoritecontext';
 
+
 const Stack = createStackNavigator();
 
 function Routes(){

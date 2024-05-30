@@ -5,11 +5,10 @@ export const FavoriteContext = createContext();
 export const FavoriteProvider = ({ children }) => {
   const [favoritos, setFavoritos] = useState([]);
 
-  const addToFavorites = (product) => {
+  const addToFavorites = (product, corSelecionada, tamanhoSelecionado) => {
     setFavoritos((prevFavoritos) => {
-      // Verificar se o produto já está nos favoritos
       if (!prevFavoritos.some(fav => fav.id === product.id)) {
-        return [...prevFavoritos, product];
+        return [...prevFavoritos, { ...product, corSelecionada, tamanhoSelecionado }];
       }
       return prevFavoritos;
     });

@@ -5,6 +5,7 @@ import SizeButton from '../../component/Clothes/SizeButton';
 import Button from '../../component/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { FavoriteContext } from '../Favorite/favoritecontext';
@@ -27,7 +28,7 @@ export default function Detail(props) {
     '#A9B388': 'Verde Claro',
     '#9BCF53': 'Verde Limão',
     '#074173': 'Azul Escuro',
-    '#7AA2E3': 'Azul ',
+    '#7AA2E3': 'Azul',
     '#D20062': 'Rosa',
     '#000000': 'Preto',
     '#D04848': 'Vermelho',
@@ -39,8 +40,8 @@ export default function Detail(props) {
   };
 
   const adicionarAosFavoritos = () => {
-    addToFavorites(products);
-    Alert.alert('Favoritos', 'Produto adicionado aos meus favoritos com sucesso!');
+    addToFavorites(products, corSelecionada, tamanhoSelecionado);
+    Alert.alert('Carrinho', 'Produto adicionado ao carrinho com sucesso!');
   };
 
   return (
@@ -53,9 +54,6 @@ export default function Detail(props) {
             <AntDesign name="left" size={30} color="#eb248b" />
           </TouchableOpacity>
           <Text style={{ fontSize: 20, marginLeft: '3%' }}>{products.productName}</Text>
-          <TouchableOpacity style={styles.favButton} onPress={adicionarAosFavoritos}>
-            <AntDesign name="hearto" size={25} color="#eb248b" />
-          </TouchableOpacity>
         </SafeAreaView>
       </View>
       <View style={styles.viewImage}>
@@ -77,6 +75,9 @@ export default function Detail(props) {
           {products.colors.map((color, index) => (
             <Dot key={index} color={color} onPress={() => setCorSelecionada(colorNames[color])} />
           ))}
+          <TouchableOpacity style={styles.cartButton} onPress={adicionarAosFavoritos}>
+          <FontAwesome name="shopping-cart" size={30} color="#eb248b" />
+          </TouchableOpacity>
         </View>
         <Text style={{ fontSize: 17, paddingHorizontal: '2%' }}>Tamanhos:</Text>
         <View style={{ flexDirection: 'row', width: '100%' }}>
@@ -203,26 +204,25 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalContent: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    minHeight: '50%',
+    backgroundColor: '#FFF',
+    width: '80%',
+    height: '50%',
+    borderRadius: 20,
   },
   modalText: {
-    fontSize: 15,
-    lineHeight: 25,
-    marginVertical: '2%',
-    paddingHorizontal: '2%',
-    fontFamily: 'Poppins_400Regular',
-    marginTop: 20
+    fontSize: 16,
+    marginVertical: 10,
+    marginHorizontal: 20
   },
-  favButton: {
-    marginLeft: 'auto',
-    marginRight: '2%',
+  cartButton:{
+    marginLeft: '45%',
+    backgroundColor: 'rgba(250,200,200,0.2)',
+    padding: '2%',
+    borderRadius: '12%',
   },
 });

@@ -6,7 +6,7 @@ import Clothes from '../../component/Clothes';
 import { auth } from '../../firebase.config';
 import { useNavigation } from '@react-navigation/native';
 import { signOut } from 'firebase/auth';
-import Favorite from '../Favorite';
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -59,26 +59,31 @@ export default function Home() {
                     Espaço Jade
                 </Text>
 
-                {/* Favoritos */}
-                <TouchableOpacity
-                    style={{ position: 'absolute', right: 20, bottom: 30, alignSelf: 'center' }}
-                    onPress={() => navigation.navigate('Favorite')}
-                >
-                    <AntDesign name="hearto" size={24} color="black" />
-                </TouchableOpacity>
             </View>
 
             <View style={styles.textContainer}>
                 <Text style={[styles.text, filter === 'all']}>{filter === 'all' ? 'TODOS' : filter.toUpperCase()}</Text>
                 <Text style={[styles.text, { color: '#cececf' }]}>-</Text>
                 <Text style={[styles.text, { color: '#cececf' }, filter === 'feminino' && styles.selectedText]}>FEMININO</Text>
-                <TouchableOpacity style={{ position: 'absolute', right: 0, alignSelf: 'center' }}>
+                <TouchableOpacity style={{ position: 'absolute', right: '-2%', 
+                     alignSelf: 'center',backgroundColor: 'rgba(250,200,200,0.2)',
+                    padding: '2%',borderRadius: '12%', }}>
                     <MaterialIcons
                         name='filter-list'
-                        size={24}
+                        size={25}
                         color= '#eb248b'
                         onPress={() => setModalVisible(true)}
                     />
+                </TouchableOpacity>
+
+                {/* Favoritos */}
+                <TouchableOpacity 
+                    style={{ position: 'absolute', right: '15%', 
+                     alignSelf: 'center',backgroundColor: 'rgba(250,200,200,0.2)',
+                    padding: '2%',borderRadius: '12%', }}
+                    onPress={() => navigation.navigate('Favorite')}
+                >
+                    <FontAwesome name="shopping-cart" size={25} color="#eb248b" />
                 </TouchableOpacity>
             </View>
 
@@ -175,16 +180,16 @@ const styles = StyleSheet.create({
     button: {
         width: 50,
         top: '-3%',
-        paddingVertical: 10,
-        borderRadius: 100,
-        backgroundColor: '#eb248b',
+        paddingVertical: '2%',
+        borderRadius: '10%',
+        backgroundColor: 'rgba(250,200,200,0.2)',
         marginVertical: 10,
         marginLeft: -70
     },
     buttonText: {
-        color: '#fff',
+        color: '#eb248b',
         fontFamily: 'Poppins_400Regular',
-        fontSize: 10,
+        fontSize: 15,
         textAlign: 'center',
     },
     logo: {

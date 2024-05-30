@@ -1,20 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Button({  products, tamanhoSelecionado, corSelecionada}) {
-    
-    
-    const enviarParaWhatsapp = () => {
-        const mensagem = `Olá!\nGostaria de comprar o produto "${products.productName}",\nno tamanho "${tamanhoSelecionado}",\ne na cor "${corSelecionada}".\nPor favor, me informe como posso proceder com a compra.\nObrigado!.`;
-        const numeroWhatsapp = '5521971490546';
-        Linking.openURL(`whatsapp://send?phone=${numeroWhatsapp}&text=${encodeURIComponent(mensagem)}`);
+export default function Button() {
+    const navigation = useNavigation();
 
+    const irParaFavoritos = () => {
+        navigation.navigate('Favorite'); 
     };
     
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.btnContainer} onPress={enviarParaWhatsapp}>
-                <Text style={styles.title}>COMPRAR</Text>
+            <TouchableOpacity style={styles.btnContainer} onPress={irParaFavoritos}>
+                <Text style={styles.title}>IR PARA CARRINHO</Text>
             </TouchableOpacity>
         </View>
     );
