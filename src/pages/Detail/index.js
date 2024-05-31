@@ -64,8 +64,11 @@ export default function Detail(props) {
         />
       </View>
       <View>
-        <View>
+        <View style={{alignItems:'flex-start'}}>
           <Text style={[styles.title, { fontSize: 20 }, { marginTop: 15 }, { color: '#eb248b' }]}>R${products.productPrice}</Text>
+          <TouchableOpacity style={styles.cartButton} onPress={adicionarAosFavoritos}>
+          <FontAwesome name="shopping-cart" size={30} color="#eb248b" />
+          </TouchableOpacity>
         </View>
         <View opacity={0.4}>
           <Text style={[styles.title, { fontSize: 17 }]}>{products.productName}</Text>
@@ -75,10 +78,8 @@ export default function Detail(props) {
           {products.colors.map((color, index) => (
             <Dot key={index} color={color} onPress={() => setCorSelecionada(colorNames[color])} />
           ))}
-          <TouchableOpacity style={styles.cartButton} onPress={adicionarAosFavoritos}>
-          <FontAwesome name="shopping-cart" size={30} color="#eb248b" />
-          </TouchableOpacity>
         </View>
+          
         <Text style={{ fontSize: 17, paddingHorizontal: '2%' }}>Tamanhos:</Text>
         <View style={{ flexDirection: 'row', width: '100%' }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -147,7 +148,7 @@ export default function Detail(props) {
               exiting={ZoomOut}
             >
               <TouchableOpacity style={styles.favButton} onPress={() => setModalVisible(false)}>
-                <Text style={{ fontSize: 18, color: '#eb248b', marginTop: 20 }}>Fechar</Text>
+                <Text style={{ fontSize: 18, color: '#eb248b', marginTop: 20, marginLeft: 15 }}>Fechar</Text>
               </TouchableOpacity>
               <Text style={styles.modalText}>{products.description}</Text>
               <Text style={styles.modalText}>Categoria: {products.category}</Text>
@@ -205,13 +206,13 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems:'center',
+    justifyContent: 'flex-end',
   },
   modalContent: {
     backgroundColor: '#FFF',
-    width: '80%',
-    height: '50%',
+    width: '100%',
+    height: '40%',
     borderRadius: 20,
   },
   modalText: {
@@ -220,9 +221,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 20
   },
   cartButton:{
-    marginLeft: '45%',
+    
     backgroundColor: 'rgba(250,200,200,0.2)',
     padding: '2%',
+   
     borderRadius: '12%',
+    left: 350
   },
 });
